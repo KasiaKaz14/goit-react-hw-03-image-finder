@@ -89,7 +89,7 @@ export class App extends Component {
   };
 
   render() {
-    const { images, largeImageURL, isLoading, showModal, id } = this.state;
+    const { images, largeImageURL, isLoading, showModal } = this.state;
     return (
       <div
         style={{
