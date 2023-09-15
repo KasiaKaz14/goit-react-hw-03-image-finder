@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Loader } from './Loader/Loader';
 import { OnSubmit } from './Searchbar/Searchbar';
-import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Button } from './Button/Button';
 import { Modal } from './Modal/Modal';
-import axios from 'axios';
+import { ImageGallery } from './ImageGallery/ImageGallery';
 import { ImageGalleryItem } from './ImageGalleryItem/ImageGalleryItem';
+import axios from 'axios';
 
 axios.defaults.baseURL = 'https://pixabay.com/api/';
 
@@ -103,7 +103,10 @@ export class App extends Component {
         }}
       >
         <OnSubmit onSubmit={this.handleSearch} />
-        <ImageGallery images={images} onImageClick={this.handleImageClick} />
+        {isLoading && <Loader />}
+        {images.length > 0 && (
+          <ImageGallery images={images} onImageClick={this.handleImageClick} />
+        )}
         {images.map(image => (
           <ImageGalleryItem
             key={image.id}
@@ -112,7 +115,6 @@ export class App extends Component {
             onImageClick={this.handleImageClick}
           />
         ))}
-        {isLoading && <Loader />}
         {images.length > 0 && <Button onLoadMore={this.handleLoadMore} />}
         {showModal && (
           <Modal imageUrl={largeImageURL} onClose={this.handleModalClose} />

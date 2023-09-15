@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import css from './Searchbar.module.css';
 
-export const OnSubmit = ({ onSubmit }) => (
+export const OnSubmit = ({ onSubmit, id }) => (
   <>
     <header className={css.searchbar}>
       <form className={css.form}>
@@ -16,6 +16,7 @@ export const OnSubmit = ({ onSubmit }) => (
           autoComplete="off"
           autoFocus
           placeholder="Search images and photos"
+          name={id}
         />
       </form>
     </header>
