@@ -4,7 +4,7 @@ import { Searchbar } from './Searchbar/Searchbar';
 import { Button } from './Button/Button';
 import { Modal } from './Modal/Modal';
 import { ImageGallery } from './ImageGallery/ImageGallery';
-import axios from 'axios';
+import { fetchImages } from './Images/Images';
 
 export class App extends Component {
   state = {
@@ -21,19 +21,10 @@ export class App extends Component {
     showModal: false,
   };
 
-  fetchImages = async (image, page) => {
-    const API_KEY = '38253107-b25581e8f8d05da09cf98b2cc';
-    const BASE_URL = 'https://pixabay.com/api/';
-    const response = await axios.get(
-      `${BASE_URL}?q=${image}&page=${page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`
-    );
-    return response;
-  };
-
-  componentDidUpdate(prevProps, prevState) {
-    const { imageItem, page } = this.state;
-    if (prevState.imageItem !== imageItem || prevState.page !== page) {
-      this.getImages(imageItem, page);
+  componentDidUpdate(prevState) {
+    const { imageItem } = this.state;
+    if (prevState.imageItem !== imageItem) {
+      this.getImages(imageItem, 1);
     }
   }
 
@@ -43,7 +34,7 @@ export class App extends Component {
       return;
     }
     try {
-      const { hits, totalHits } = await this.fetchImages(image, page);
+      const { hits, totalHits } = await fetchImages(image, page);
       this.setState(prevState => ({
         images: [...prevState.images, ...hits],
         loadMore: this.state.page < Math.ceil(totalHits / this.state.per_page),
@@ -55,13 +46,21 @@ export class App extends Component {
     }
   };
 
-  handleFormSubmit = imageName => {
-    this.setState({
-      imageName,
-      images: [],
-      page: 1,
-      loadMore: false,
-    });
+  handleFormSubmit = imageItem => {
+    this.setState(
+      {
+        images: [],
+        page: 1,
+        error: null,
+        isLoading: false,
+        loadMore: false,
+        showModal: false,
+        largeImageURL: 'largeImageURL',
+      },
+      () => {
+        this.getImages(imageItem, 1);
+      }
+    );
   };
 
   handleLoadMore = () => {
