@@ -4,28 +4,22 @@ import { Searchbar } from './Searchbar/Searchbar';
 import { Button } from './Button/Button';
 import { Modal } from './Modal/Modal';
 import { ImageGallery } from './ImageGallery/ImageGallery';
-import { ImageGalleryItem } from './ImageGalleryItem/ImageGalleryItem';
 import axios from 'axios';
 
 export class App extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      images: [],
-      imageItem: '',
-      page: 1,
-      per_page: 12,
-      id: null,
-      webformatURL: [],
-      largeImageURL: 'largeImageURL',
-      page: 1,
-      error: null,
-      isLoading: false,
-      loadMore: false,
-      showModal: false,
-    };
-  }
+  state = {
+    images: [],
+    imageItem: '',
+    page: 1,
+    per_page: 12,
+    id: null,
+    largeImageURL: 'largeImageURL',
+    page: 1,
+    error: null,
+    isLoading: false,
+    loadMore: false,
+    showModal: false,
+  };
 
   fetchImages = async (image, page) => {
     const API_KEY = '38253107-b25581e8f8d05da09cf98b2cc';
@@ -44,7 +38,7 @@ export class App extends Component {
   }
 
   getImages = async (image, page) => {
-    this.setState({ loading: true });
+    this.setState({ isLoading: true });
     if (!image) {
       return;
     }
@@ -61,29 +55,13 @@ export class App extends Component {
     }
   };
 
-  handleChange = event => {
-    this.setState({ imageItem: event.currentTarget.value.toLowerCase() });
-  };
-
-  handleFormSubmit = event => {
-    event.preventDefault();
-    if (this.state.imageItem.trim() === '') {
-      return alert('Type the keyword');
-    }
-    this.props.onSubmit(this.state.imageItem);
-    this.setState({ images: '' });
-  };
-
-  handleKeyDown = event => {
-    if (event.code === 'Escape') {
-      this.props.onClose();
-    }
-  };
-
-  handleImageClick = event => {
-    if (event.currentTarget === event.target) {
-      this.props.onClose();
-    }
+  handleFormSubmit = imageName => {
+    this.setState({
+      imageName,
+      images: [],
+      page: 1,
+      loadMore: false,
+    });
   };
 
   handleLoadMore = () => {
@@ -119,10 +97,7 @@ export class App extends Component {
           fontSize: 40,
         }}
       >
-        <Searchbar
-          onSubmit={this.handleFormSubmit}
-          onChange={this.handleChange}
-        />
+        <Searchbar onSubmit={this.handleFormSubmit} />
         {isLoading ? (
           <Loader />
         ) : (

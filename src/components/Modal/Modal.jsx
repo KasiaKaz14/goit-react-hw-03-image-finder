@@ -20,7 +20,7 @@ export class Modal extends Component {
     }
   };
 
-  handleBackDropClick = event => {
+  handleImageClick = event => {
     if (event.currentTarget === event.target) {
       this.props.onClose();
     }
