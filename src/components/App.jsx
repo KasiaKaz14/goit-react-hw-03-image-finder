@@ -14,7 +14,6 @@ export class App extends Component {
     per_page: 12,
     id: null,
     largeImageURL: 'largeImageURL',
-    page: 1,
     error: null,
     isLoading: false,
     loadMore: false,
