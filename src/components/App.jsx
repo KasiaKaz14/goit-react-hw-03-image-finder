@@ -63,7 +63,7 @@ export class App extends Component {
     );
   };
 
-  handleLoadMore = () => {
+  onLoadMore = () => {
     this.setState(prevState => ({ page: prevState.page + 1 }));
   };
 
@@ -103,7 +103,7 @@ export class App extends Component {
           <ImageGallery images={images} openModal={this.openModal} />
         )}
 
-        {loadMore && <Button onLoadMore={this.handleLoadMore} page={page} />}
+        {loadMore && <Button onLoadMore={this.onLoadMore} page={page} />}
 
         {showModal && (
           <Modal largeImageURL={largeImageURL} onClose={this.closeModal} />
