@@ -1,18 +1,15 @@
 import PropTypes from 'prop-types';
 import css from './ImageGalleryItem.module.css';
 
-export const ImageGalleryItem = ({ webformatURL, id, images }) => (
-  <>
-    {images.map(({ id, webformatURL }) => (
-      <li className={css.galleryItem} key={id}>
-        <a href={webformatURL} target="_blank" rel="noreferrer noopener">
-          <img src={webformatURL} alt="" />
-        </a>
-      </li>
-    ))}
-  </>
+export const ImageGalleryItem = ({ src, alt, largeImageURL, openModal }) => (
+  <li className={css.galleryItem} onClick={() => openModal(largeImageURL)}>
+    <img src={src} alt={alt} className={css.image} />
+  </li>
 );
 
 ImageGalleryItem.propTypes = {
-  images: PropTypes.array.isRequired,
+  src: PropTypes.string,
+  alt: PropTypes.string,
+  largeImageURL: PropTypes.string,
+  openModal: PropTypes.func,
 };

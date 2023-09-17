@@ -2,11 +2,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import css from './Searchbar.module.css';
 
-export const OnSubmit = ({ onSubmit, id }) => (
-  <>
+export const Searchbar = ({ handleFormSubmit, imageItem, handleChange }) => {
+  return (
     <header className={css.searchbar}>
-      <form className={css.form}>
-        <button type="submit" className={css.button} onSubmit={onSubmit}>
+      <form className={css.form} onSubmit={handleFormSubmit}>
+        <button type="submit" className={css.button}>
           <span className={css.buttonLabel}>Search</span>
         </button>
 
@@ -16,13 +16,15 @@ export const OnSubmit = ({ onSubmit, id }) => (
           autoComplete="off"
           autoFocus
           placeholder="Search images and photos"
-          name={id}
+          name="imageItem"
+          value={imageItem}
+          onChange={handleChange}
         />
       </form>
     </header>
-  </>
-);
+  );
+};
 
-OnSubmit.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
+Searchbar.propTypes = {
+  onSubmit: PropTypes.func,
 };
