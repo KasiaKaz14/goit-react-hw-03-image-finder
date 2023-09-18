@@ -20,7 +20,7 @@ export class App extends Component {
     showModal: false,
   };
 
-  componentDidUpdate(prevState) {
+  componentDidUpdate(prevProps, prevState) {
     const { imageItem } = this.state;
     if (prevState.imageItem !== imageItem) {
       this.getImages(imageItem, 1);
@@ -87,7 +87,6 @@ export class App extends Component {
       <div
         style={{
           display: 'flex',
-          justifyContent: 'center',
           flexDirection: 'column',
           flexWrap: 'wrap',
           gap: 30,
