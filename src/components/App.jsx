@@ -21,9 +21,9 @@ export class App extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    const { imageItem } = this.state;
-    if (prevState.imageItem !== imageItem) {
-      this.getImages(imageItem, 1);
+    const { imageItem, page } = this.state;
+    if (prevState.imageItem !== imageItem || prevState.page !== page) {
+      this.getImages(imageItem, page);
     }
   }
 
@@ -46,20 +46,12 @@ export class App extends Component {
   };
 
   handleFormSubmit = imageItem => {
-    this.setState(
-      {
-        images: [],
-        page: 1,
-        error: null,
-        isLoading: false,
-        loadMore: false,
-        showModal: false,
-        largeImageURL: 'largeImageURL',
-      },
-      () => {
-        this.getImages(imageItem, 1);
-      }
-    );
+    this.setState({
+      imageItem,
+      images: [],
+      page: 1,
+      loadMore: true,
+    });
   };
 
   onLoadMore = () => {
