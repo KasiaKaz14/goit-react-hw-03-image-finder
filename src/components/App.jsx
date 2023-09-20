@@ -50,7 +50,7 @@ export class App extends Component {
       imageItem,
       images: [],
       page: 1,
-      loadMore: true,
+      loadMore: false,
     });
   };
 
